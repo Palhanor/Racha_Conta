@@ -1,0 +1,52 @@
+        .postagemCliente, .postagemProduto {
+            border: none;
+            border-radius: 3px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 10px 0;
+            background-color: firebrick;
+        }
+        .postagemProduto {
+            width: 100%;
+        }
+        .iconeDoUsuario {
+            font-size: 26px;
+            margin-bottom: 5px;
+        }
+        .dadosDoCliente {
+            font-weight: 900;
+            overflow: hidden;
+        }
+        .dadosDoCliente, .areaDoValorDividido, .iconeDoUsuario {
+            width: 100%;
+            text-align: center;
+        }
+        .dadosDoProduto {
+            width: 85%;
+            display: inline-block;
+            padding-left: 25px;
+        }
+        .areaDoPreco {
+            width: 15%;
+            display: inline-block;
+        }
+        .displayParaSelecionar {
+            width: 30%;
+            height: 200px;
+            background-color: white;
+            border-radius: 3px;
+            box-shadow: 0 0 10px black;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            overflow-y: scroll;
+        }
+        .botaoParaSelecionar {
+            background-color: #FF6347;
+            border: 1px solid #ff5233;
+            padding: 5px 10px;
+            border-radius: 2px;
+            margin: 5px 0 0 5px;
+            cursor: pointer;
+        }

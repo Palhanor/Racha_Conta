@@ -1,0 +1,219 @@
+<!-- FEITO -->
+<!-- 1 - Adicionar o valor dividido igualmente para todos os clientes -->
+<!-- 2 - Adicionar o valor de arcordo com a ordem que entraram na mesa -->
+<!-- 3 - Poder selecionar qual cliente ficou com qual produto (clicando no produto) -->
+<!-- 4 - Poder dividir o custo de produtos individualmente por um quantidade limitada de clientes -->
+<!-- 5 - Adicionar o RS aos valores -->
+<!-- 6 - Blocos unificados com cliente (post e lista) e produto (post e lista) -->
+<!-- 7 - Impedir que aplique sem nenhum cliente selecionado -->
+<!-- 8 - Ajustar o design (caixa de opções, cores, fonte, outros...) -->
+<!-- 9 - Dar função ou remover o botão "Fechar conta" -->
+<!-- 10 - Acabar a barra lateral esquerda com os icones (novo, expandir, duvidas, conta...) -->
+<!-- 11 - Ajustar a expansão de tela para rolagem fluida -->
+
+<!-- FALTA -->
+<!-- 0 - Alertar que o preço já foi dividido -->
+	<!-- Pega a posição do item clicado -->
+	<!-- Cria um array "JaFoiDividido" -->
+	<!-- Coloca como true na posição dele -->
+	<!-- If JaFoiDividido[posicaoDele] == true então alert("Esse item já foi dividido") -->
+<!-- 0 - Ajustar para a versão mobile (sistema responsivo) -->
+
+<!-- 0 - Fazer calcular com mais que 9 clientes (pegar mais de um digito) -->
+<!-- 0 - Poder apagar um item da lista de produtos ou clientes -->
+<!-- 0 - Lista de itens e quantidade que cada usuário consumiu -->
+<!-- 0 - Atribuir diferentes pesos para o pagamento dos clientes -->
+<!-- 0 - Criar opção de redividir -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<title>Racha Conta</title>
+	<link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	<link rel="shortcut icon" type="image/x-icon" href="wallet.ico" />
+	<link rel="stylesheet" href="CSS/Conteudo-Adicionado.css">
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		text-decoration: none;
+		box-sizing: border-box;
+		font-family: 'Muli', sans-serif;
+	}
+	::-webkit-scrollbar{
+  		width: 10px;
+	}
+	::-webkit-scrollbar-track {
+		background: #cbc5c5;
+	}
+	::-webkit-scrollbar-thumb {
+		background: #696969; 
+		border-radius: 2px;
+	}
+	
+	#navbar {
+		background-color: firebrick;
+		width: 100%;
+		text-align: center;
+		height: 60px;
+		padding-top: 14px;
+	}
+	#barraEsquerda {
+		float: left;
+		min-height: 90vh;
+		background-color: #4F5D69;
+		width: 65px;
+/*		position: fixed;
+		left: 0;*/
+	}
+	.iconeEspecial {
+		width: 100%;
+		color: #efefef;
+		text-align: center;
+		height: 70px;
+		font-size: 22px;
+		cursor: pointer;
+		padding-top: 23px;
+	}
+	.iconeEspecial:hover {
+		background-color: #6F7E8B;
+	}
+	#todaPagina {
+		float: left;
+		min-height: 90vh;
+		width: calc(100% - 65px);
+		background-color: #efefef;
+/*		position: absolute;
+		right: 0;*/
+	}
+	#tudoDeClientes, #tudoDeProdutos {
+		float: left;
+		width: 50%;
+		height: 90vh;
+		overflow: auto;
+	}
+	#tudoDeProdutos {
+		border-left: 1px solid lightgray;
+	}
+	#clientesContainer, #produtosContainer {
+		margin: 60px auto 10px;
+		width: 80%;
+		height: 110px;
+		padding: 20px 20px;
+		border: none;
+		border-radius: 5px;
+		background-color: firebrick;
+		margin-bottom: 50px;
+	}
+	#nomeCliente, #addCliente, #nomeProduto, #precoProduto, #addProduto {
+		margin-bottom: 10px;
+		padding: 6px 10px;
+		border: none;
+		border-radius: 2px;
+		outline: none;
+	}
+	#nomeCliente, #addCliente, #containerDeInputProdutos, #addProduto, #precoProduto {
+		width: 100%;
+	}
+	#nomeProduto {
+		width: 98%;
+	}
+	#containerDeNomeProduto {
+		float: left;
+		width: 75%;
+		display: inline-block;
+	}
+	#containerDePrecoProduto {
+		float: left;
+		width: 25%;
+		display: inline-block;
+	}
+	#addCliente, #addProduto {
+		background-color: #cbc5c5;
+		cursor: pointer;
+	}
+	#addCliente:hover, #addProduto:hover {
+		background-color: #bfb8b8;
+	}
+	#listaProdutosContainer {
+		width: 80%;
+		margin: auto;
+	}
+	#listaClientesContainer {
+		width: 81.5%;
+		margin: auto;
+	}
+</style>
+</head>
+
+<body id="corpo">
+<nav id="navbar">
+	<h1 id="nome">Racha Conta</h1>
+</nav>
+
+<div id="barraEsquerda">
+	<div class="iconeEspecial fas fa-undo-alt"></div>
+	<div class="iconeEspecial fas fa-ban"></div>
+	<div class="iconeEspecial fas fa-question"></div>
+</div>
+
+<div id="todaPagina">
+	<div id="tudoDeClientes">
+		<div id="clientesContainer">
+			<input type="text" id="nomeCliente" placeholder="Username">
+			<button type="button" id="addCliente">Add user</button>
+		</div>
+		<div id="listaClientesContainer">
+		</div>
+	</div>
+	<div id="tudoDeProdutos">
+		<div id="produtosContainer">
+			<div id="containerDeInputProdutos">
+				<div id="containerDeNomeProduto">
+					<input type="text" id="nomeProduto" placeholder="Product">
+				</div>
+				<div id="containerDePrecoProduto">
+					<input type="text" id="precoProduto" placeholder="Price">
+				</div>
+			</div>
+			<button id="addProduto">Add product</button>
+		</div>
+		<div id="listaProdutosContainer">
+		</div>
+	</div>
+</div>
+
+<script>
+
+var corpo = document.getElementById("corpo");
+var addCliente = document.getElementById("addCliente");
+var addProduto = document.getElementById("addProduto");
+var listaClientesContainer = document.getElementById("listaClientesContainer");
+var listaProdutosContainer = document.getElementById("listaProdutosContainer");
+// var foiDividido = 0;
+
+addCliente.addEventListener("click", function() {
+addClienteFunction();
+});
+
+addProduto.addEventListener("click", function() {
+addProdutoFunction();
+});
+
+</script>
+
+<!--ADICIONA UM NOVO CLEINTE-->
+<script src="JS/Adiciona-Cliente.js"></script>
+<!--ADICIONA UM NOVO PRODUTO (COM SEU PREÇO)-->
+<script src="JS/Adiciona-Produto.js"></script>
+<!--SELECIONA QUAIS/QUANTOS CLIENTES CONSUMIRAM O PRODUTO-->
+<script src="JS/Seleciona-Clientes.js"></script>
+<!--DIVIDE O PREÇO DO PRODUTO IGUALMENTE PARA TODOS OS CLIENTES-->
+<script src="JS/Dividido-Por-Todos.js"></script>
+<!--DIVIDE O PREÇO DO PRODUTO IGUALMENTE PARA TODOS OS CLIENTES-->
+<script src="JS/Valor-Dividido.js"></script>
+
+</body>
+</html>
